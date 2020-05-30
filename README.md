@@ -1,3 +1,23 @@
+To use internal dac in Logicgreen AVR clone, you need to change some line in pmf_player_arduino_avr.cpp
+
+First, you need dbuezas's Larduino board package:
+https://github.com/dbuezas/lgt8fx
+If you are using 328P-SSOP20, please choose "328P-LQFP48 MiniEVB" variant.
+This disables Serial communication, but it is only way to use SSOP20 at 32MHz. (afaik)
+
+In function start_playback():
+//DDRD=0xff; //comment out port direction setting
+analogReference(INTERNAL4V096); // set reference voltage
+pinMode(4, ANALOG); // set dac output pin
+
+If you want to use with internal 32MHz:
+OCR1A=(32000000+sampling_freq_/2)/sampling_freq_;
+
+This chip don't have dac buffer, you may need to connect opamp buffer like this -> 
+https://www.instructables.com/id/Arduino-Audio-Output/
+
+---
+
 Few people have been asking for the source code of my Arduino music player, so I created this GitHub project. The player is able to play MOD/S3M/XM/IT music files that are stored in the MCU program memory and has been developed so that it can run within very limited memory and performance constraints while still producing decent sound. I originally developed the player for Arduino Uno, which has only 2KB of RAM, 32KB of flash memory and 8-bit MCU running at 16MHz. Below is a video showing the player in action (running on Teensy 4 + Audio Shield)
 
 [![Arduino Music Player on Teensy Audio Shield](https://img.youtube.com/vi/Qk2NLHaBOnQ/0.jpg)](https://youtu.be/Qk2NLHaBOnQ)
