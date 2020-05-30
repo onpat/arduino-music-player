@@ -5,6 +5,9 @@ https://github.com/dbuezas/lgt8fx
 If you are using 328P-SSOP20, please choose "328P-LQFP48 MiniEVB" variant.  
 This disables Serial communication, but it is only way to use SSOP20 at 32MHz. (afaik)
 
+In function ISR():
+analogWrite(4, (uint8_t)s_audio_buffer.read_sample<uint16_t, 8>());
+
 In function start_playback():  
 //DDRD=0xff; //comment out port direction setting  
 analogReference(INTERNAL4V096); // set reference voltage  
