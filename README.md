@@ -13,6 +13,9 @@ pinMode(4, ANALOG); // set dac output pin
 If you want to use with internal 32MHz:  
 OCR1A=(32000000+sampling_freq_/2)/sampling_freq_;
 
+Set sampling frequency to CD quality(in setup()):  
+s_player.start(44100);
+
 This chip don't have dac buffer, you may need to connect opamp buffer like this ->  
 https://www.instructables.com/id/Arduino-Audio-Output/
 
