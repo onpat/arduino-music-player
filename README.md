@@ -1,19 +1,19 @@
 To use internal dac in Logicgreen AVR clone, you need to change some line in pmf_player_arduino_avr.cpp
 
 First, you need dbuezas's Larduino board package:
-https://github.com/dbuezas/lgt8fx
-If you are using 328P-SSOP20, please choose "328P-LQFP48 MiniEVB" variant.
+https://github.com/dbuezas/lgt8fx  
+If you are using 328P-SSOP20, please choose "328P-LQFP48 MiniEVB" variant.  
 This disables Serial communication, but it is only way to use SSOP20 at 32MHz. (afaik)
 
-In function start_playback():
-//DDRD=0xff; //comment out port direction setting
-analogReference(INTERNAL4V096); // set reference voltage
-pinMode(4, ANALOG); // set dac output pin
+In function start_playback():  
+//DDRD=0xff; //comment out port direction setting  
+analogReference(INTERNAL4V096); // set reference voltage  
+pinMode(4, ANALOG); // set dac output pin  
 
-If you want to use with internal 32MHz:
+If you want to use with internal 32MHz:  
 OCR1A=(32000000+sampling_freq_/2)/sampling_freq_;
 
-This chip don't have dac buffer, you may need to connect opamp buffer like this -> 
+This chip don't have dac buffer, you may need to connect opamp buffer like this ->  
 https://www.instructables.com/id/Arduino-Audio-Output/
 
 ---
