@@ -45,7 +45,7 @@ static pmf_audio_buffer<int16_t, 400> s_audio_buffer;
 //===========================================================================
 ISR(TIMER1_COMPA_vect)
 {
-  PORTD=(uint8_t)s_audio_buffer.read_sample<uint16_t, 8>();
+  analogWrite(4, (uint8_t)s_audio_buffer.read_sample<uint16_t, 8>());
 }
 //----
 
@@ -58,13 +58,15 @@ uint32_t pmf_player::get_sampling_freq(uint32_t sampling_freq_) const
 void pmf_player::start_playback(uint32_t sampling_freq_)
 {
   // enable playback interrupt at given playback frequency
-  DDRD=0xff;
+  //DDRD=0xff;
+  analogReference(INTERNAL4V096);
+  pinMode(4, ANALOG);
   s_audio_buffer.reset();
   TCCR1A=0;
   TCCR1B=_BV(CS10)|_BV(WGM12); // CTC mode 4 (OCR1A)
   TCCR1C=0;
   TIMSK1=_BV(OCIE1A);          // enable timer 1 counter A
-  OCR1A=(16000000+sampling_freq_/2)/sampling_freq_;
+  OCR1A=(32000000+sampling_freq_/2)/sampling_freq_;
 }
 //----
 
