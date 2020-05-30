@@ -96,7 +96,7 @@ void setup()
   s_player.set_row_callback(&row_callback_test); // setup row callback for the effect
 */
 
-  s_player.start(22050);
+  s_player.start(44100);
 }
 //----------------------------------------------------------------------------
 
